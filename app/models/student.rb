@@ -12,6 +12,7 @@
 class Student < ApplicationRecord
 	has_many :select_courses, dependent: :destroy
 	has_many :courses, through: :select_courses
+	has_many :teachers, through: :courses
 
 	validates :name, presence: true
 	validates :s_number, uniqueness: true

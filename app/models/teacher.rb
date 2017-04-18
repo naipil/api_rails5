@@ -11,6 +11,7 @@
 
 class Teacher < ApplicationRecord
 	has_many :courses
+	has_many :students, through: :courses
 
 	validates :name, presence: true
 	validates :t_number, uniqueness: true
