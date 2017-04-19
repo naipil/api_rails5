@@ -19,7 +19,9 @@ class Student < ApplicationRecord
 
 	def choose_course course
 		course_ids = self.courses.map(&:id)
-		if course_ids.include?(course.id)
+		if course.blank?
+			status, text = false, "未找到该课程"
+		elsif course_ids.include?(course.id)
 			status, text = false, "已经选过该课程"
 		elsif course.students.count >= 50
 			status, text = false, "该课程已满"
