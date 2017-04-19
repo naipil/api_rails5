@@ -16,4 +16,22 @@ class Student < ApplicationRecord
 
 	validates :name, presence: true
 	validates :s_number, uniqueness: true
+
+	def choose_course course
+		course_ids = self.courses.map(&:id)
+		if course_ids.include?(course.id)
+			status, text = false, "已经选过该课程"
+		elsif course.students.count >= 50
+			status, text = false, "该课程已满"
+		else
+			@select = SelectCourse.new(course_id: course.id, student_id: self.id)
+			if @select.save
+				 status, text = true, "选课成功"
+			else
+				status, text = false, "选课失败"
+			end
+		end 
+
+		return status, text
+	end
 end
